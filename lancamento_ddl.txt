@@ -1,0 +1,28 @@
+create database lancamento_db;
+
+use lancamento_db;
+
+create table pessoas (id bigint primary key not null auto_increment, nome varchar(255) not null, ativo tinyint not null)
+					engine = InnoDB default charset=utf8;
+
+create table contatos (id bigint not null auto_increment, nome varchar(50) not null, email varchar(255) not null unique,
+					telefone varchar(14) not null unique, Pessoa_id bigint not null, primary key (id, Pessoa_id), 
+					foreign key (Pessoa_id) references pessoas(id) on delete cascade)engine = InnoDB default charset=utf8;
+
+create table estados (sigla varchar (2) primary key not null, nome varchar(100) not null unique)engine = InnoDB default charset=utf8;
+
+create table cidades (id bigint primary key not null auto_increment, nome varchar(255) not null, Estado_id varchar(2) not null,
+					foreign key (Estado_id) references Estados (sigla) on delete cascade)engine = InnoDB default charset=utf8;
+
+create table enderecos ( Pessoa_id bigint primary key not null, logradouro varchar(255) not null, numero varchar(15) not null, 
+					complemento varchar(100) not null, bairro varchar(45) null, cep varchar(10) not null, Cidade_id bigint not null,
+					foreign key(Pessoa_id) references pessoas(id) on delete cascade, foreign key(Cidade_id) references cascade(id))
+					engine = InnoDB default charset=utf8;
+
+create table categorias (id bigint primary key not null auto_increment, descricao varchar(100) not null)engine = InnoDB default charset=utf8;
+
+create table lancamentos (id bigint primary key not null auto_increment, descricao varchar(255) not null, dt_vencimento date not null,
+					dt_pagamento date, valor decimal(10,2) unsigned not null, observacao text not null, tipo enum('RECEITA', 'DESPESA') not null,
+					Lancamento varchar(100), Pessoa_id bigint not null, Categoria_id bigint not null, 
+					foreign key(Pessoa_id) references pessoas(id)on delete cascade,
+					foreign key(Categoria_id) references categorias(id))engine = InnoDB default charset=utf8;
