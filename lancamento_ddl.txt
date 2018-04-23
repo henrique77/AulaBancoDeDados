@@ -26,3 +26,40 @@ create table lancamentos (id bigint primary key not null auto_increment, descric
 					Lancamento varchar(100), Pessoa_id bigint not null, Categoria_id bigint not null, 
 					foreign key(Pessoa_id) references pessoas(id)on delete cascade,
 					foreign key(Categoria_id) references categorias(id))engine = InnoDB default charset=utf8;
+
+//Dropar todas as chaves estrageiras que usam pessoa_id
+alter table contatos drop foreign key contatos_ibfk_1;
+alter table enderecos drop foreign key enderecos_ibfk_2;
+alter table lancamentos drop foreign key lancamentos_ibfk_1;
+
+//Alterar o tipo de id
+alter table pessoas modify column id bigint;
+
+//Dropar a primary key da tabela pessoas:
+alter table pessoas drop primary key;
+
+//Torna uma coluna da tabela chave primaria
+alter table pessoas add constraint pk_cpf primary key (cpf);
+
+//Cria uma coluna na tabela
+alter table contatos add column pessoa_cpf varchar(14) not null;
+alter table enderecos add column pessoa_cpf varchar(14) not null;
+alter table lancamentos add column pessoa_cpf varchar(14) not null;
+
+//Preenche a coluna pessoa_cpf relacionando com o id(tabela pessoa)
+update contatos c inner join pessoas p on c.pessoa_id=p.id set c.pessoa_cpf=p.cpf;
+update enderecos e inner join pessoas p on e.pessoa_id=p.id set e.pessoa_cpf=p.cpf;
+update lancamentos l inner join pessoas p on l.pessoa_id=p.id set l.pessoa_cpf=p.cpf;
+
+//Remover a coluna pessoa_id das tabelas:
+alter table contatos modify column pessoa_id bigint;
+alter table contatos drop column pessoa_id;
+alter table enderecos modify column pessoa_id bigint;
+alter table enderecos drop column pessoa_id;
+alter table lancamentos modify column pessoa_id bigint;
+alter table lancamentos drop column pessoa_id;
+
+//Transforma uma coluna chave estrangeira
+ALTER TABLE contatos ADD CONSTRAINT fk_pessoa_cpf FOREIGN KEY(pessoa_cpf) REFERENCES pessoas(cpf) on delete cascade on update cascade;
+ALTER TABLE enderecos ADD CONSTRAINT fk_pessoaa_cpf FOREIGN KEY(pessoa_cpf) REFERENCES pessoas(cpf) on delete cascade on update cascade;
+ALTER TABLE lancamentos ADD CONSTRAINT fk_pessoaaa_cpf FOREIGN KEY(pessoa_cpf) REFERENCES pessoas(cpf) on delete cascade on update cascade;

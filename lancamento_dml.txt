@@ -1,4 +1,4 @@
-
+﻿
 insert into pessoas (nome, ativo) values ('João da Silva', 1);
 insert into pessoas (nome, ativo) values ('Maria do Carmo', 1);
 insert into pessoas (nome, ativo) values ('Migé dos Santos', 1);
@@ -157,5 +157,10 @@ insert into lancamentos (descricao, dt_vencimento, dt_pagamento, valor, observac
 insert into lancamentos (descricao, dt_vencimento, dt_pagamento, valor, observacao, tipo, Lancamento, Pessoa_id, Categoria_id) values 
 						('Boleto', '2018-12-14', null, 200, 'Mensalidade', 2, NULL, 3, 2);
 insert into lancamentos (descricao, dt_vencimento, dt_pagamento, valor, observacao, tipo, Lancamento, Pessoa_id, Categoria_id) values 
-						('Boleto', '2018-12-27', null, 395, 'Mensalidade', 2, NULL, 3, 2);				
+						('Boleto', '2018-12-27', null, 395, 'Mensalidade', 2, NULL, 3, 2);
+
+//Inserir os valores para CPF:
+update pessoas set cpf='111.111.111-11' where id=1;
+update pessoas set cpf='222.222.222-22' where id=2;
+update pessoas set cpf='333.333.333-33' where id=3;				
 						
