@@ -1,9 +1,7 @@
 ﻿//Retorna a media da coluna valor
-/*select avg(nome_coluna)  from nome_tabela;*/
 select avg(valor)  from lancamentos;
 
 //Retorna a media da coluna valor para cada cpf
-/*select atributo_destiguir, avg(coluna_tirar_media)  from nome_tabela group by atributo_destiguir;*/
 select pessoa_cpf, avg(valor)  from lancamentos group by pessoa_cpf;
 
 //Encontrar a media de despesas/receitas de uma pessoa especifica em um determinado periodo
